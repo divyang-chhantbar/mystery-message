@@ -18,18 +18,13 @@ import { AcceptMessageSchema } from '@/schemas/AcceptMessageSchema';
 
 function UserDashboard() {
   const [messages, setMessages] = useState<Message[]>([]);
-  // here initially we have an empty array of messages and we are using the useState hook to manage the state of the messages
-  // haan ek aur cheez when we are sending messages and the messages we have in the array to sirf message nahi ja rahe unke sath ek pura object/document ja raha hai jismein message ke sath aur bhi kuch properties hain jaise ki id , createdAt , updatedAt etc. So we have used the Message model to define the type of the messages
   const [isLoading, setIsLoading] = useState(false);
-  // it is a loading state when i am checking/fetching the messages
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
-      // it is a loading state when i am accepting or rejecting the messages
 
   const { toast } = useToast();
 
   const handleDeleteMessage = (messageId: string) => {
     setMessages(messages.filter((message) => message._id !== messageId));
-      // here we are filtering the messages and we are removing the message which has the same id as the messageId
   };
 
   const { data: session } = useSession();
@@ -59,7 +54,6 @@ function UserDashboard() {
       setIsSwitchLoading(false);
     }
   }, [setValue, toast]);
-   // setValue will get hit in the callbacks when the data came with same values so we could preserve it and save more callbacks
 
   const fetchMessages = useCallback(
     async (refresh: boolean = false) => {
@@ -97,8 +91,6 @@ function UserDashboard() {
     fetchMessages();
 
     fetchAcceptMessages();
-     // here we are fetching the messages which are accepted
-    // in the ui part what will happen is that we are going to fetch the messages and then we are going to show the messages in the ui and then we are going to show the toggle button which will help us to accept or reject the message and then we are going to show the toast message
   }, [session, setValue, toast, fetchAcceptMessages, fetchMessages]);
 
   // Handle switch change
@@ -203,4 +195,3 @@ function UserDashboard() {
 }
 
 export default UserDashboard;
-// while making this file , I have studied the react hook form documentation because here we are discussing about forms and when also we are adding the toggle button which will help us to accept or reject the message and also simultaneously giving the toast message so it becomes harder to manage the state of the form and also the state of the toast message so I have used the react hook form to manage the state of the form and also the state of the toast message. And also we have used forms in earlier code so in order to maintain the consistency I have used the react hook form to manage the state of the form and also the state of the toast message.
