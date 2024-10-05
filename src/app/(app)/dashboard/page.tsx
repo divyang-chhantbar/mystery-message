@@ -26,6 +26,7 @@ function UserDashboard() {
   const handleDeleteMessage = (messageId: string) => {
     setMessages(messages.filter((message) => message._id !== messageId));
   };
+  // it will delete the message from the list of messages
 
   const { data: session } = useSession();
 
@@ -89,7 +90,6 @@ function UserDashboard() {
     if (!session || !session.user) return;
 
     fetchMessages();
-
     fetchAcceptMessages();
   }, [session, setValue, toast, fetchAcceptMessages, fetchMessages]);
 
@@ -97,7 +97,7 @@ function UserDashboard() {
   const handleSwitchChange = async () => {
     try {
       const response = await axios.post<ApiResponse>('/api/accept-messages', {
-        acceptMessages: !acceptMessages,
+        acceptMessage: !acceptMessages,
       });
       setValue('acceptMessages', !acceptMessages);
       toast({
